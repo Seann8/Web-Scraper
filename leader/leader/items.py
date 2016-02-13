@@ -13,4 +13,5 @@ class LeaderItem(scrapy.Item):
     author = scrapy.Field()
     link = scrapy.Field()
     body = scrapy.Field()
+    category = scrapy.Field()
 

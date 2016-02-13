@@ -1,6 +1,7 @@
 import scrapy
 from leader.items import LeaderItem
 
+
 class Newsspider(scrapy.Spider):
     """
     A class to scrape the limerick Leader will parse and collect 
@@ -10,8 +11,8 @@ class Newsspider(scrapy.Spider):
     allowed_domains = ['limerickleader.ie']# a list of approved domains to follow 
     start_urls = [
             'http://www.limerickleader.ie/sezioni/131/news'
+            'http://www.limerickleader.ie/sezioni/310/columns-opinion'
             ]# starting points 
-    
 
     def parse(self, response):
         for links in response.xpath('//h2[@class="titolo vc_title"]'):
@@ -19,7 +20,6 @@ class Newsspider(scrapy.Spider):
             items['title'] = links.xpath('a/text()').extract()
             items['link'] = links.xpath('a/@href').extract()
             for url in items['link']:
-                print url
                 request = scrapy.Request(url, callback=self.parsebody) # create a request for each link 
                 request.meta['items'] = items # shallow copies items to pass to next method 
                 yield request
